@@ -1,0 +1,27 @@
+fileFormatVersion: 2
+guid: 697c7b2320767954c8464d9eacce0abd
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Anko Personal Use
+  fontNames:
+  - Anko Personal Use
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 134629d4c313a63428233311bdf874c5, type: 3}
+  - {fileID: 12800000, guid: 06438a36781ee62498a9b17dd0b2499e, type: 3}
+  - {fileID: 12800000, guid: c3cad56d0abd1bd44958e01fe88c5154, type: 3}
+  - {fileID: 12800000, guid: 42427fbf9aa6fe949af2fc44aad20d3e, type: 3}
+  - {fileID: 12800000, guid: 968059cf8d6f2f644b30a5c734028da1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
