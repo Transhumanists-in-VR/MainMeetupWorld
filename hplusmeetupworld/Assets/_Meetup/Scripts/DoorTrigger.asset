@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f11136daadff0b44ac2278a314682ab, type: 3}
   m_Name: DoorTrigger
   m_EditorClassIdentifier: 
-  serializedUdonProgramAsset: {fileID: 11400000, guid: 5be9a339eb97a4045ad449458f40b5dd,
+  serializedUdonProgramAsset: {fileID: 11400000, guid: b9fa9c3450f667041b4fe710d2b64737,
     type: 2}
   udonAssembly: ".data_start\r\n\r\n    \r\n\r\n.data_end\r\n\r\n.code_start\r\n\r\n\r\n.code_end\r\n"
   assemblyError: 
@@ -22,8 +22,5 @@ MonoBehaviour:
     nodes: []
     updateOrder: 0
   graphElementData: []
-  viewTransform:
-    position: {x: 0, y: 0}
-    scale: 1
   version: 1.0.0
   showAssembly: 0
