@@ -26,7 +26,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Hex
-    second: {fileID: 2100000, guid: def77e7465b23734aafbf942cdf3de6c, type: 2}
+    second: {fileID: 2100000, guid: c4bc7f32d92923144abba547d789a6a7, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -52,7 +52,8 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    extraUserProperties: []
+    extraUserProperties:
+    - '#BAKERY{"meshName":["polySurface20"],"padding":[194],"unwrapper":[0]}'
     clipAnimations: []
     isReadable: 1
   meshes:

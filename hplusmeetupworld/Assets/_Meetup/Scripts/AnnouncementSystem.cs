@@ -11,7 +11,12 @@ public class AnnouncementSystem : UdonSharpBehaviour
 		"HampVR",
 		"JCorvinus",
 		"AllisonDeere",
-		"lauren0001"
+		"․Death․",
+		"PurposeUnknown",
+		"Random TM",
+		"guillefix",
+		"DownLyric",
+		"Reijinarudo"
 	};
 
 	[SerializeField] GameObject announcementButton;
@@ -28,21 +33,9 @@ public class AnnouncementSystem : UdonSharpBehaviour
 
 	int phase=3; // 0 fade in, 1 sustain, 2 fade out
 
-	VRCPlayerApi LocalPlayer()
-	{
-		VRCPlayerApi[] allPlayers = new VRCPlayerApi[64];
-		allPlayers = VRCPlayerApi.GetPlayers(allPlayers);
-		foreach (VRCPlayerApi player in allPlayers)
-		{
-			if (player != null && player.IsValid() && player.isLocal) return player;
-		}
-
-		return null;
-	}
-
 	void Start()
     {
-		localPlayer = LocalPlayer();
+		localPlayer = Networking.LocalPlayer;
 
 		announcementButton.SetActive(false);
 		CheckLocalPlayerPermissions();
@@ -64,78 +57,68 @@ public class AnnouncementSystem : UdonSharpBehaviour
 		}
 		else
 		{
-			localPlayer = LocalPlayer();
+			localPlayer = Networking.LocalPlayer;
 		}
 	}
 
-	public void SendAnnouncement()
+	public override bool OnOwnershipRequest(VRCPlayerApi requestingPlayer, VRCPlayerApi requestedOwner)
 	{
-		if(cooldownTimer > 0)
-		{
-			return;
-		}
-
 		int playerNameID = -1;
-		for(int i=0; i < userWhiteList.Length; i++)
+		for (int i = 0; i < userWhiteList.Length; i++)
 		{
-			if(userWhiteList[i] == localPlayer.displayName)
+			if (userWhiteList[i] == localPlayer.displayName)
 			{
 				playerNameID = i;
 				break;
 			}
 		}
 
-		switch (playerNameID)
+		return playerNameID >= 0;
+	}
+
+	public override void OnOwnershipTransferred(VRCPlayerApi player)
+	{
+		SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+				"NetAnnouncement");
+	}
+
+	public void SendAnnouncement()
+	{
+		if (cooldownTimer > 0)
 		{
-			case (0):
-				SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
-					"SendHampAnnouncement");
-				break;
+			return;
+		}
 
-			case (1):
-				SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
-					"SendJCAnnouncement");
+		int playerNameID = -1;
+		for (int i = 0; i < userWhiteList.Length; i++)
+		{
+			if (userWhiteList[i] == localPlayer.displayName)
+			{
+				playerNameID = i;
 				break;
+			}
+		}
 
-			case (2):
-				SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
-					"SendAllisonAnnouncement");
-				break;
+		if (playerNameID >= 0)
+		{
+			VRCPlayerApi owner = Networking.GetOwner(this.gameObject);
 
-			case (3):
-				SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
-					"SendLaurenAnnouncement");
-				break;
-
-			default:
-				break;
+			if (owner == localPlayer) SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+				"NetAnnouncement");
+			else Networking.SetOwner(localPlayer, this.gameObject);
 		}
 	}
 
-	public void SendHampAnnouncement()
+
+	public void NetAnnouncement()
 	{
-		StartAnnouncement(0);
+		StartAnnouncement();
 	}
 
-	public void SendJCAnnouncement()
-	{
-		StartAnnouncement(1);
-	}
-
-	public void SendAllisonAnnouncement()
-	{
-		StartAnnouncement(2);
-	}
-
-	public void SendLaurenAnnouncement()
-	{
-		StartAnnouncement(3);
-	}
-
-	void StartAnnouncement(int whiteListID)
+	void StartAnnouncement()
 	{
 		announcementText.text = string.Format("{0} has an announcement!",
-			userWhiteList[whiteListID]);
+			Networking.GetOwner(this.gameObject).displayName);
 		announcementPhaseTimer = 0;
 		phase = 0;
 		alertSound.Play();

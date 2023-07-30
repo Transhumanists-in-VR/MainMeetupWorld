@@ -84,7 +84,8 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    extraUserProperties: []
+    extraUserProperties:
+    - '#BAKERY{"meshName":["HexLight.007","PillarLight.003","HexLight.005","PillarMesh","PillarMesh.001","PillarLight","HexLight.002","HexLight.003","HexLight.001","PillarMesh.002","PillarLight.002","PillarMesh.003","TheaterCylidner","PillarLight.001","HexLight.006","HexLight.004","HexLight"],"padding":[44,99,54,28,28,99,37,41,43,29,99,32,3,99,39,48,41],"unwrapper":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]}'
     clipAnimations: []
     isReadable: 0
   meshes:
