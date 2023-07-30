@@ -27,7 +27,6 @@ public class AnnouncementSystem : UdonSharpBehaviour
 	const float announcementDuration = 5f;
 	const float fadeDuration = 0.25f;
 	float announcementPhaseTimer = 0;
-	VRCPlayerApi localPlayer;
 	const float cooldownDuration = 10;
 	float cooldownTimer = 0;
 
@@ -35,8 +34,6 @@ public class AnnouncementSystem : UdonSharpBehaviour
 
 	void Start()
     {
-		localPlayer = Networking.LocalPlayer;
-
 		announcementButton.SetActive(false);
 		CheckLocalPlayerPermissions();
 		alertSound = notificationTransform.GetComponent<AudioSource>();
@@ -44,20 +41,16 @@ public class AnnouncementSystem : UdonSharpBehaviour
 
 	void CheckLocalPlayerPermissions()
 	{
-		if (localPlayer != null && localPlayer.IsValid())
+		if (Networking.LocalPlayer != null && Networking.LocalPlayer.IsValid())
 		{
 			foreach (string userName in userWhiteList)
 			{
-				if (localPlayer.displayName == userName)
+				if (Networking.LocalPlayer.displayName == userName)
 				{
 					announcementButton.gameObject.SetActive(true);
 					break;
 				}
 			}
-		}
-		else
-		{
-			localPlayer = Networking.LocalPlayer;
 		}
 	}
 
@@ -66,7 +59,7 @@ public class AnnouncementSystem : UdonSharpBehaviour
 		int playerNameID = -1;
 		for (int i = 0; i < userWhiteList.Length; i++)
 		{
-			if (userWhiteList[i] == localPlayer.displayName)
+			if (userWhiteList[i] == Networking.LocalPlayer.displayName)
 			{
 				playerNameID = i;
 				break;
@@ -92,7 +85,7 @@ public class AnnouncementSystem : UdonSharpBehaviour
 		int playerNameID = -1;
 		for (int i = 0; i < userWhiteList.Length; i++)
 		{
-			if (userWhiteList[i] == localPlayer.displayName)
+			if (userWhiteList[i] == Networking.LocalPlayer.displayName)
 			{
 				playerNameID = i;
 				break;
@@ -103,9 +96,9 @@ public class AnnouncementSystem : UdonSharpBehaviour
 		{
 			VRCPlayerApi owner = Networking.GetOwner(this.gameObject);
 
-			if (owner == localPlayer) SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
+			if (owner == Networking.LocalPlayer) SendCustomNetworkEvent(VRC.Udon.Common.Interfaces.NetworkEventTarget.All,
 				"NetAnnouncement");
-			else Networking.SetOwner(localPlayer, this.gameObject);
+			else Networking.SetOwner(Networking.LocalPlayer, this.gameObject);
 		}
 	}
 
@@ -127,7 +120,7 @@ public class AnnouncementSystem : UdonSharpBehaviour
 
 	private void Update()
 	{
-#if !UNITY_EDITOR
+//#if !UNITY_EDITOR
 		// check our local player validity
 		CheckLocalPlayerPermissions();
 
@@ -140,7 +133,9 @@ public class AnnouncementSystem : UdonSharpBehaviour
 			buttonText.text = (cooldownTimer > 0) ? cooldownTimer.ToString() : "Make Announcement";
 		}
 
-		VRCPlayerApi.TrackingData headTracking = localPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
+		if (Networking.LocalPlayer == null) return;
+
+		VRCPlayerApi.TrackingData headTracking = Networking.LocalPlayer.GetTrackingData(VRCPlayerApi.TrackingDataType.Head);
 
 		float slerpPower = 0.021f;
 		Vector3 forwardDirection = headTracking.rotation * Vector3.forward;
@@ -195,6 +190,6 @@ public class AnnouncementSystem : UdonSharpBehaviour
 			default:
 				break;
 		}
-#endif
+//#endif
 	}
 }
