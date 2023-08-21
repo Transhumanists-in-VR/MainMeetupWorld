@@ -176,8 +176,8 @@ PlayerSettings:
   applicationIdentifier: {}
   buildNumber: {}
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 19
-  AndroidTargetSdkVersion: 29
+  AndroidMinSdkVersion: 25
+  AndroidTargetSdkVersion: 32
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   stripEngineCode: 1
@@ -629,7 +629,7 @@ PlayerSettings:
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
     1: UNITY_POST_PROCESSING_STACK_V2;UDON;VRC_SDK_VRCSDK3;UDONSHARP;BAKERY_INCLUDED
-    7: UNITY_POST_PROCESSING_STACK_V2;UDON;VRC_SDK_VRCSDK3;UDONSHARP
+    7: UNITY_POST_PROCESSING_STACK_V2;UDON;VRC_SDK_VRCSDK3;UDONSHARP;BAKERY_INCLUDED
     13: UNITY_POST_PROCESSING_STACK_V2
     14: UNITY_POST_PROCESSING_STACK_V2
     19: UNITY_POST_PROCESSING_STACK_V2
@@ -644,6 +644,7 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend: {}
   il2cppCompilerConfiguration:
+    Android: 1
     Standalone: 1
   managedStrippingLevel: {}
   incrementalIl2cppBuild: {}
